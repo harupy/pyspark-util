@@ -1,0 +1,18 @@
+on: [push]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    container:
+      image: harupy/pyspark-util
+      volumes:
+        - .:/pyspark-util
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run lint
+        run: |
+          ./tools/lint.sh
+      - name: Run test
+        run: |
+          ./tools/test.sh
