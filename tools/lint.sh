@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-flake8 . --doctests --statistics --show-source
+flake8 . --statistics --show-source

@@ -8,3 +8,8 @@ session = SparkSession.builder.getOrCreate()
 def spark():
     yield session
     session.stop()
+
+
+@pytest.fixture(autouse=True)
+def add_spark(doctest_namespace):
+    doctest_namespace['spark'] = session
