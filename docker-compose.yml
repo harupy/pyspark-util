@@ -1,0 +1,9 @@
+version: '2'
+services:
+  psu-dev-env:
+    build: .
+    image: psu-img
+    container_name: psu-cnt
+    volumes:
+      - .:/pyspark-util
+    tty: true

@@ -1,0 +1,9 @@
+pyspark>=2.4.4
+
+# test
+pytest
+pytest-cov
+
+# lint & code format
+flake8
+autopep8
