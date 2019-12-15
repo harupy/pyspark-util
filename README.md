@@ -1,6 +1,6 @@
 # pyspark-util
 
-A set of Pyspark utility functions.
+A set of pyspark utility functions.
 
 ```python
 import pyspark_util as psu
