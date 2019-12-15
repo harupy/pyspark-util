@@ -2,7 +2,7 @@ version: '2'
 services:
   psu-dev-env:
     build: .
-    image: psu-img
+    image: harupy:pyspark-util
     container_name: psu-cnt
     volumes:
       - .:/pyspark-util
