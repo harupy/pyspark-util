@@ -4,6 +4,36 @@ import pyspark.sql.functions as F
 
 
 def _validate_columns(df, columns):
+    """
+    Raises a ValueError if the given dataframe doesn't contains columns with the given names.
+
+    Parameters
+    ----------
+    df : dataframe
+        dataframe to check.
+    columns : list of str
+        columns to check.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    ValueError
+        If the given dataframe doesn't contain columns with the given names.
+
+    Examples
+    --------
+    >>> data = [(1, 2, 3)]
+    >>> columns = ['a', 'b', 'c']
+    >>> df = spark.createDataFrame(data, columns)
+    >>> _validate_columns(df, 'a')
+    >>> _validate_columns(df, 'd')  # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+        ...
+    ValueError: The given dataframe does not contain ['d'].
+    """
     not_found = [c for c in columns if c not in df.columns]
     if len(not_found) > 0:
         raise ValueError('The given dataframe does not contain {}.'.format(not_found))
@@ -16,12 +46,23 @@ def prefix_columns(df, prefix, sep='_', exclude=[]):
     Parameters
     ----------
     df : dataframe
+        dataframe to be prefixed.
     prefix : str
-    exclude : list of str
+        string to add before each column.
+    sep : str, default '_'
+        separator to join ``prefix`` and each column with.
+    exclude : list of str, default []
+        A selection of columns to exclude from being prefixed.
 
     Returns
     -------
-    prefixed : dataframe
+    dataframe
+        dataframe with prefixed columns.
+
+    Raises
+    ------
+    ValueError
+        If ``exclude`` contains columns that don't exist in the given dataframe.
 
     Examples
     --------
@@ -69,12 +110,23 @@ def suffix_columns(df, suffix, sep='_', exclude=[]):
     Parameters
     ----------
     df : dataframe
+        dataframe to be suffixed.
     suffix : str
-    exclude : list of str
+        string to add after each column.
+    sep : str, default '_'
+        separator to join each column and ``suffix`` with.
+    exclude : list of str, default []
+        A selection of columns to exclude from being suffixed.
 
     Returns
     -------
-    suffixed : dataframe
+    dataframe
+        dataframe with suffixed columns.
+
+    Raises
+    ------
+    ValueError
+        If ``exclude`` contains columns that don't exist in the given dataframe.
 
     Examples
     --------
@@ -122,11 +174,19 @@ def rename_columns(df, mapper):
     Parameters
     ----------
     df : dataframe
+        dataframe to be renamed.
     mapper : dict
+        dictionary with old name as keys and new name as values.
 
     Returns
     -------
-    renamed : dataframe
+    dataframe
+        dataframe with renamed columns.
+
+    Raises
+    ------
+    ValueError
+        If ``mapper`` contains columns that don't exist in the given dataframe.
 
     Examples
     --------
@@ -159,11 +219,14 @@ def select_columns_regex(df, regex):
     Parameters
     ----------
     df : dataframe
+        dataframe to be selected from.
     regex : str
+        regular expression.
 
     Returns
     -------
-    matched : dataframe
+    dataframe
+        dataframe with matched columns
 
     Examples
     --------
