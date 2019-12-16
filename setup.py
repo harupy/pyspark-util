@@ -24,7 +24,7 @@ setup(
     url='https://github.com/harupy/pyspark-util',
     project_urls={
         'Bug Tracker': 'https://github.com/harupy/pyspark-util',
-        'Source Code': 'https://github.com/databricks/pyspark-util'
+        'Source Code': 'https://github.com/harupy/pyspark-util'
     },
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
