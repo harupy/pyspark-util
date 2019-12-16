@@ -7,3 +7,7 @@ pytest-cov
 # lint & code format
 flake8
 autopep8
+
+# doc
+sphinx
+sphinx-rtd-theme
