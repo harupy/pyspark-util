@@ -23,7 +23,7 @@ setup(
     maintainer_email='hkawamura0130@gmail.com',
     url='https://github.com/harupy/pyspark-util',
     project_urls={
-        'Bug Tracker': 'https://github.com/harupy/pyspark-util',
+        'Bug Tracker': 'https://github.com/harupy/pyspark-util/issues',
         'Source Code': 'https://github.com/harupy/pyspark-util'
     },
     description=DESCRIPTION,
