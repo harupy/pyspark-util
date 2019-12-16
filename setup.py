@@ -12,7 +12,7 @@ with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name='pyspark_util',
+    name='pyspark-util',
     version=__version__,
     packages=['pyspark_util'],
     python_requires='>=3.5',
