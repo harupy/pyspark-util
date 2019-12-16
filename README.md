@@ -5,7 +5,18 @@ A set of pyspark utility functions.
 ```python
 import pyspark_util as psu
 
-...
+data = [(1, 2, 3)]
+columns = ['a', 'b', 'c']
+df = spark.createDataFrame(data, columns)
+prefixed = psu.prefix_columns(df, 'x')
+prefixed.show()
+
+# output:
++---+---+---+
+|x_a|x_b|x_c|
++---+---+---+
+|  1|  2|  3|
++---+---+---+
 ```
 
 ## Development
