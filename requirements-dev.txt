@@ -9,5 +9,5 @@ flake8
 autopep8
 
 # doc
-sphinx
+sphinx>=2.2.0
 sphinx-rtd-theme
