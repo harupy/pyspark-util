@@ -11,4 +11,3 @@ Welcome to pyspark-util's documentation!
    :caption: Contents:
 
    reference/index.rst
-

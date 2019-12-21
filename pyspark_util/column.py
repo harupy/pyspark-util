@@ -16,6 +16,21 @@ def null_ratio(col_name):
     column
         Null ratio.
 
+    Examples
+    --------
+    >>> df = spark.createDataFrame([
+    ...     (1,),
+    ...     (2,),
+    ...     (None,),
+    ...     (None,),
+    ... ], ['x'])
+    >>> df.select(null_ratio('x')).show()  # doctest: +NORMALIZE_WHITESPACE
+    +---+
+    |  x|
+    +---+
+    |0.5|
+    +---+
+
     """
     return F.mean(F.col(col_name).isNull().cast(IntegerType())).alias(col_name)
 
@@ -29,7 +44,7 @@ def blank_ratio(col_name, include_null=False):
     col_name : str
         column name
     include_null : bool, default False
-        If True, the blank ratio is calculated including NULL rows.
+        If True, the blank ratio is calculated including ``NULL`` rows.
 
     Returns
     -------
@@ -38,7 +53,7 @@ def blank_ratio(col_name, include_null=False):
 
     Examples
     --------
-    By default, `NULL` is ignored.
+    By default, ``NULL`` is ignored.
 
     >>> df = spark.createDataFrame([
     ...     ('a',),
@@ -54,7 +69,7 @@ def blank_ratio(col_name, include_null=False):
     |0.5|
     +---+
 
-    With ``include_null=True``, `NULL` is included in the calculation.
+    With ``include_null=True``, ``NULL`` is included in the calculation.
 
     >>> df = spark.createDataFrame([
     ...     ('a',),
