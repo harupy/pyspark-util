@@ -10,6 +10,7 @@ from .columns import (
 from .column import (
     null_ratio,
     blank_ratio,
+    is_unique,
 )
 
 __all__ = [
@@ -22,6 +23,5 @@ __all__ = [
     # column
     'null_ratio',
     'blank_ratio',
-
-
+    'is_unique',
 ]

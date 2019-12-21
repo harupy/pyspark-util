@@ -59,3 +59,25 @@ def test_blank_ratio():
     ], ['x'])
 
     assert_frame_equal(result, expected)
+
+
+def test_is_unique():
+    df = spark.createDataFrame([(1,), (2,), (3,)], ['x'])
+    result = df.select(psu.is_unique('x'))
+    expected = spark.createDataFrame([(True,)], ['x'])
+    assert_frame_equal(result, expected)
+
+    df = spark.createDataFrame([(1,), (2,), (2,)], ['x'])
+    result = df.select(psu.is_unique('x'))
+    expected = spark.createDataFrame([(False,)], ['x'])
+    assert_frame_equal(result, expected)
+
+    df = spark.createDataFrame([(1,), (2,), (3,), (None,)], ['x'])
+    result = df.select(psu.is_unique('x'))
+    expected = spark.createDataFrame([(True,)], ['x'])
+    assert_frame_equal(result, expected)
+
+    df = spark.createDataFrame([(1,), (2,), (3,), (None,), (None,)], ['x'])
+    result = df.select(psu.is_unique('x'))
+    expected = spark.createDataFrame([(False,)], ['x'])
+    assert_frame_equal(result, expected)
