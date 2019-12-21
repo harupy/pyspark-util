@@ -1,5 +1,7 @@
 # pyspark-util
 
+![test_status](https://github.com/harupy/pyspark-util/workflows/Test/badge.svg)
+
 A set of pyspark utility functions.
 
 ```python
