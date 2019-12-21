@@ -76,21 +76,21 @@ def prefix_columns(df, prefix, sep='_', exclude=[]):
     |  1|  2|  3|
     +---+---+---+
 
-    >>> prefix_columns(df, 'x').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.prefix_columns(df, 'x').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |x_a|x_b|x_c|
     +---+---+---+
     |  1|  2|  3|
     +---+---+---+
 
-    >>> prefix_columns(df, 'x', sep='|').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.prefix_columns(df, 'x', sep='|').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |x|a|x|b|x|c|
     +---+---+---+
     |  1|  2|  3|
     +---+---+---+
 
-    >>> prefix_columns(df, 'x', exclude=['b', 'c']).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.prefix_columns(df, 'x', exclude=['b', 'c']).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |x_a|  b|  c|
     +---+---+---+
@@ -140,21 +140,21 @@ def suffix_columns(df, suffix, sep='_', exclude=[]):
     |  1|  2|  3|
     +---+---+---+
 
-    >>> suffix_columns(df, 'x').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.suffix_columns(df, 'x').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |a_x|b_x|c_x|
     +---+---+---+
     |  1|  2|  3|
     +---+---+---+
 
-    >>> suffix_columns(df, 'x', sep='|').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.suffix_columns(df, 'x', sep='|').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |a|x|b|x|c|x|
     +---+---+---+
     |  1|  2|  3|
     +---+---+---+
 
-    >>> suffix_columns(df, 'x', exclude=['b', 'c']).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.suffix_columns(df, 'x', exclude=['b', 'c']).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |a_x|  b|  c|
     +---+---+---+
@@ -200,7 +200,7 @@ def rename_columns(df, mapper):
     |  1|  2|  3|
     +---+---+---+
 
-    >>> rename_columns(df, {'a': 'x'}).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.rename_columns(df, {'a': 'x'}).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+---+---+
     |  x|  b|  c|
     +---+---+---+
@@ -240,14 +240,14 @@ def select_columns_regex(df, regex):
     |  1|  2|
     +---+---+
 
-    >>> select_columns_regex(df, r'[a-z]+').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.select_columns_regex(df, r'[a-z]+').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+
     |abc|
     +---+
     |  1|
     +---+
 
-    >>> select_columns_regex(df, r'[0-9]+').show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> psu.select_columns_regex(df, r'[0-9]+').show()  # doctest: +NORMALIZE_WHITESPACE
     +---+
     |123|
     +---+

@@ -1,5 +1,6 @@
 import pytest
 from pyspark.sql import SparkSession
+import pyspark_util as psu
 
 session = SparkSession.builder.getOrCreate()
 
@@ -13,3 +14,4 @@ def spark():
 @pytest.fixture(autouse=True)
 def add_spark(doctest_namespace):
     doctest_namespace['spark'] = session
+    doctest_namespace['psu'] = psu

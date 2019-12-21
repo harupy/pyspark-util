@@ -24,7 +24,7 @@ def null_ratio(col_name):
     ...     (None,),
     ...     (None,),
     ... ], ['x'])
-    >>> df.select(null_ratio('x')).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> df.select(psu.null_ratio('x')).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+
     |  x|
     +---+
@@ -62,7 +62,7 @@ def blank_ratio(col_name, include_null=False):
     ...     ('',),
     ...     (None,),
     ... ], ['x'])
-    >>> df.select(blank_ratio('x')).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> df.select(psu.blank_ratio('x')).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+
     |  x|
     +---+
@@ -78,7 +78,7 @@ def blank_ratio(col_name, include_null=False):
     ...     ('',),
     ...     (None,),
     ... ], ['x'])
-    >>> df.select(blank_ratio('x', include_null=True)).show()  # doctest: +NORMALIZE_WHITESPACE
+    >>> df.select(psu.blank_ratio('x', include_null=True)).show()  # doctest: +NORMALIZE_WHITESPACE
     +---+
     |  x|
     +---+
