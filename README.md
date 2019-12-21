@@ -2,6 +2,8 @@
 
 ![test_status](https://github.com/harupy/pyspark-util/workflows/Test/badge.svg)
 [![Documentation Status](https://readthedocs.org/projects/pyspark-util/badge/?version=latest)](https://pyspark-util.readthedocs.io/en/latest/?badge=latest)
+[![Latest Release](https://img.shields.io/pypi/v/pyspark-util.svg)](https://pypi.org/project/pyspark-util/)
+
 
 
 A set of pyspark utility functions.
