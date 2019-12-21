@@ -30,6 +30,12 @@ Output:
 +---+---+---+
 ```
 
+## Installation
+
+```
+pip install pyspark-util
+```
+
 ## Development
 
 ### Setup
