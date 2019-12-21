@@ -4,6 +4,8 @@
 
 A set of pyspark utility functions.
 
+Example:
+
 ```python
 import pyspark_util as psu
 
@@ -14,9 +16,9 @@ prefixed = psu.prefix_columns(df, 'x')
 prefixed.show()
 ```
 
-This code outputs:
+Output:
 
-```shell
+```
 +---+---+---+
 |x_a|x_b|x_c|
 +---+---+---+
