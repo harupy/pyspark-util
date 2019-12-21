@@ -9,8 +9,8 @@ from .dataframe import (
 
 from .column import (
     null_ratio,
+    blank_ratio,
 )
-
 
 __all__ = [
     # dataframe
@@ -21,4 +21,5 @@ __all__ = [
 
     # column
     'null_ratio',
+    'blank_ratio',
 ]
