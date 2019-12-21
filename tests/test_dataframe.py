@@ -1,89 +1,77 @@
-import unittest
+import pytest
 from pyspark.sql import SparkSession
 import pyspark_util as psu
 
 spark = SparkSession.builder.getOrCreate()
 
 
-class TestDataFrame(unittest.TestCase):
+def test_prefix_columns():
+    data = [(1, 2, 3)]
+    columns = ['a', 'b', 'c']
+    df = spark.createDataFrame(data, columns)
 
-    def test_prefix_columns(self):
-        data = [(1, 2, 3)]
-        columns = ['a', 'b', 'c']
-        df = spark.createDataFrame(data, columns)
+    prefixed = psu.prefix_columns(df, 'x')
+    assert prefixed.columns == ['x_a', 'x_b', 'x_c']
 
-        prefixed = psu.prefix_columns(df, 'x')
-        expected = ['x_a', 'x_b', 'x_c']
-        self.assertEqual(prefixed.columns, expected)
+    prefixed = psu.prefix_columns(df, 'x', sep='|')
+    assert prefixed.columns == ['x|a', 'x|b', 'x|c']
 
-        prefixed = psu.prefix_columns(df, 'x', sep='|')
-        expected = ['x|a', 'x|b', 'x|c']
-        self.assertEqual(prefixed.columns, expected)
+    prefixed = psu.prefix_columns(df, 'x', exclude=['b', 'c'])
+    assert prefixed.columns == ['x_a', 'b', 'c']
 
-        prefixed = psu.prefix_columns(df, 'x', exclude=['b', 'c'])
-        expected = ['x_a', 'b', 'c']
-        self.assertEqual(prefixed.columns, expected)
+    with pytest.raises(ValueError, match='The given dataframe does not contain'):
+        psu.prefix_columns(df, 'x', exclude=['e'])
 
-        with self.assertRaisesRegex(ValueError, 'The given dataframe does not contain'):
-            psu.prefix_columns(df, 'x', exclude=['e'])
 
-    def test_suffix_columns(self):
-        data = [(1, 2, 3)]
-        columns = ['a', 'b', 'c']
-        df = spark.createDataFrame(data, columns)
+def test_suffix_columns():
+    data = [(1, 2, 3)]
+    columns = ['a', 'b', 'c']
+    df = spark.createDataFrame(data, columns)
 
-        suffixed = psu.suffix_columns(df, 'x')
-        expected = ['a_x', 'b_x', 'c_x']
-        self.assertEqual(suffixed.columns, expected)
+    suffixed = psu.suffix_columns(df, 'x')
+    assert suffixed.columns == ['a_x', 'b_x', 'c_x']
 
-        suffixed = psu.suffix_columns(df, 'x', sep='|')
-        expected = ['a|x', 'b|x', 'c|x']
-        self.assertEqual(suffixed.columns, expected)
+    suffixed = psu.suffix_columns(df, 'x', sep='|')
+    assert suffixed.columns == ['a|x', 'b|x', 'c|x']
 
-        suffixed = psu.suffix_columns(df, 'x', exclude=['b', 'c'])
-        expected = ['a_x', 'b', 'c']
-        self.assertEqual(suffixed.columns, expected)
+    suffixed = psu.suffix_columns(df, 'x', exclude=['b', 'c'])
+    assert suffixed.columns == ['a_x', 'b', 'c']
 
-        with self.assertRaisesRegex(ValueError, 'The given dataframe does not contain'):
-            psu.suffix_columns(df, 'x', exclude=['e'])
+    with pytest.raises(ValueError, match='The given dataframe does not contain'):
+        psu.suffix_columns(df, 'x', exclude=['e'])
 
-    def test_rename_columns(self):
-        data = [(1, 2, 3)]
-        columns = ['a', 'b', 'c']
-        df = spark.createDataFrame(data, columns)
 
-        renamed = psu.rename_columns(df, {'a': 'x', 'b': 'y', 'c': 'z'})
-        expected = ['x', 'y', 'z']
-        self.assertEqual(renamed.columns, expected)
+def test_rename_columns():
+    data = [(1, 2, 3)]
+    columns = ['a', 'b', 'c']
+    df = spark.createDataFrame(data, columns)
 
-        renamed = psu.rename_columns(df, {'a': 'x', 'b': 'y'})
-        expected = ['x', 'y', 'c']
-        self.assertEqual(renamed.columns, expected)
+    renamed = psu.rename_columns(df, {'a': 'x', 'b': 'y', 'c': 'z'})
+    assert renamed.columns == ['x', 'y', 'z']
 
-        with self.assertRaisesRegex(ValueError, 'The given dataframe does not contain'):
-            psu.rename_columns(df, {'e': 'x'})
+    renamed = psu.rename_columns(df, {'a': 'x', 'b': 'y'})
+    assert renamed.columns == ['x', 'y', 'c']
 
-    def test_select_columns_regex(self):
-        data = [(1, 2, 3)]
-        columns = ['abc', '123', '___']
-        df = spark.createDataFrame(data, columns)
+    with pytest.raises(ValueError, match='The given dataframe does not contain'):
+        psu.rename_columns(df, {'e': 'x'})
 
-        matched = psu.select_columns_regex(df, r'.+')
-        expected = ['abc', '123', '___']
-        self.assertEqual(matched.columns, expected)
 
-        matched = psu.select_columns_regex(df, r'[a-z]+')
-        expected = ['abc']
-        self.assertEqual(matched.columns, expected)
+def test_select_columns_regex():
+    data = [(1, 2, 3)]
+    columns = ['abc', '123', '___']
+    df = spark.createDataFrame(data, columns)
 
-        matched = psu.select_columns_regex(df, r'[0-9]+')
-        expected = ['123']
-        self.assertEqual(matched.columns, expected)
+    matched = psu.select_columns_regex(df, r'.+')
+    assert matched.columns == ['abc', '123', '___']
 
-        matched = psu.select_columns_regex(df, '___')
-        expected = ['___']
-        self.assertEqual(matched.columns, expected)
+    matched = psu.select_columns_regex(df, r'[a-z]+')
+    assert matched.columns == ['abc']
 
-        matched = psu.select_columns_regex(df, 'no_match')
-        expected = []
-        self.assertEqual(matched.columns, expected)
+    matched = psu.select_columns_regex(df, r'[0-9]+')
+    assert matched.columns == ['123']
+
+    matched = psu.select_columns_regex(df, '___')
+    assert matched.columns == ['___']
+
+    matched = psu.select_columns_regex(df, 'no_match')
+    assert matched.columns == []
