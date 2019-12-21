@@ -10,8 +10,11 @@ columns = ['a', 'b', 'c']
 df = spark.createDataFrame(data, columns)
 prefixed = psu.prefix_columns(df, 'x')
 prefixed.show()
+```
 
-# output:
+This code outputs:
+
+```shell
 +---+---+---+
 |x_a|x_b|x_c|
 +---+---+---+
