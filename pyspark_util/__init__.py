@@ -11,6 +11,7 @@ from .column import (
     null_ratio,
     blank_ratio,
     is_unique,
+    contains,
 )
 
 __all__ = [
@@ -24,4 +25,5 @@ __all__ = [
     'null_ratio',
     'blank_ratio',
     'is_unique',
+    'contains',
 ]

@@ -148,3 +148,46 @@ def is_unique(col_name):
         (F.count(col_name) == F.countDistinct(col_name)) &
         (F.count(F.when(F.col(col_name).isNull(), 1).otherwise(None)) <= 1)
     ).alias(col_name)
+
+
+def contains(col_name, pat):
+    """
+    Test if pattern or regex is contained within a string.
+
+    Parameters
+    ----------
+    col_name : str
+        column name
+    pat : str
+        character sequence or regular expression.
+
+    Returns
+    -------
+    column
+        column of boolean values indicating whether the given pattern is contained
+        within each element.
+
+    Examples
+    --------
+    >>> df = spark.createDataFrame([('abc',), ('123',), (None,)], ['x'])
+    >>> df.select(psu.contains('x', 'abc')).show()  # doctest: +NORMALIZE_WHITESPACE
+    +-----+
+    |    x|
+    +-----+
+    | true|
+    |false|
+    | null|
+    +-----+
+
+    >>> df = spark.createDataFrame([('abc',), ('123',), (None,)], ['x'])
+    >>> df.select(psu.contains('x', r'[a-z]+')).show()  # doctest: +NORMALIZE_WHITESPACE
+    +-----+
+    |    x|
+    +-----+
+    | true|
+    |false|
+    | null|
+    +-----+
+
+    """
+    return (F.regexp_extract(F.col(col_name), pat, 0) != '').alias(col_name)

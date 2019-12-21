@@ -1,3 +1,4 @@
+import pytest
 from pyspark.sql import SparkSession
 import pyspark_util as psu
 from tests.utils import assert_frame_equal
@@ -80,4 +81,22 @@ def test_is_unique():
     df = spark.createDataFrame([(1,), (2,), (3,), (None,), (None,)], ['x'])
     result = df.select(psu.is_unique('x'))
     expected = spark.createDataFrame([(False,)], ['x'])
+    assert_frame_equal(result, expected)
+
+
+@pytest.mark.parametrize('pat,rows_expected', [
+    ('abc', [(True,), (False,), (None,)]),
+    ('123', [(False,), (True,), (None,)]),
+    (r'[a-z]+', [(True,), (False,), (None,)]),
+    (r'\d+', [(False,), (True,), (None,)]),
+    (r'[a-z]+|\d+', [(True,), (True,), (None,)]),
+])
+def test_contains(pat, rows_expected):
+    rows_in = [('abc',), ('123',), (None,)]
+    df = spark.createDataFrame(rows_in, ['x'])
+    result = df.withColumn('y', psu.contains('x', pat))
+    expected = spark.createDataFrame(
+        [(x[0], y[0]) for x, y in zip(rows_in, rows_expected)],
+        ['x', 'y']
+    )
     assert_frame_equal(result, expected)
